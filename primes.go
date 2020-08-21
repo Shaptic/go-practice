@@ -49,14 +49,13 @@ func main() {
 		return
 	}
 
-	n, err := strconv.ParseInt(os.Args[1], 10, 64)
+	ceiling, err := strconv.Atoi(os.Args[1]) //, 10, 64)
 	if err != nil {
 		fmt.Printf("Usage: ./%s [count]", os.Args[0])
 		return
 	}
 
 	primes := []int{2}
-	ceiling := int(n)
 	for i := 3; i <= ceiling; i += 1 {
 		if wellIsIt, newPrimes := isPrimeCached(i, primes); wellIsIt {
 			fmt.Printf("%d is prime\n", i)
