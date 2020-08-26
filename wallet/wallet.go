@@ -104,7 +104,7 @@ func createAccount() *keypair.Full {
 			break
 		}
 
-		filename = fmt.Sprintf("./account-%d.json", counter)
+		filename = fmt.Sprintf("./accounts/account-%d.json", counter)
 		counter++
 	}
 
@@ -132,8 +132,14 @@ func loadAccount(filename string) *keypair.Full {
 
 	_, err := os.Stat(filename)
 	if os.IsNotExist(err) {
-		printErrorMsg("File '%s' does not exist.", filename)
-		return nil
+		// try prepending the directory name, even though we should probably
+		// force people to give us paths that make sense...
+		filename = fmt.Sprintf("accounts/%s", filename)
+		_, err := os.Stat(filename)
+		if os.IsNotExist(err) {
+			printErrorMsg("File '%s' does not exist.", filename)
+			return nil
+		}
 	}
 
 	data, err := ioutil.ReadFile(filename)
