@@ -21,12 +21,10 @@ import (
 	"os"
 )
 
-
 type KeyPair struct {
 	Public string `json:"public"`
 	Secret string `json:"secret"`
 }
-
 
 func state(format string, args ...interface{}) {
 	fmt.Printf("[ ] %s ...\r", fmt.Sprintf(format, args...))
@@ -99,7 +97,7 @@ func createAccount() *keypair.Full {
 	fmt.Printf("  private key: %s\n", pair.Seed())
 
 	counter := 1
-	filename := "./account.json"
+	filename := "./accounts/account.json"
 	for {
 		_, err := os.Stat(filename)
 		if os.IsNotExist(err) {
