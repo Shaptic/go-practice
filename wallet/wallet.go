@@ -159,9 +159,11 @@ func requireTrustline(issuer *keypair.Full, asset txnbuild.Asset) error {
 	)
 
 	// The usual song & dance w/ signing, submitting, etc.
-	if _, err := signAndSend(from, tx); err != nil {
+	if _, err := signAndSend(issuer, tx); err != nil {
 		return err
 	}
+
+	return nil
 }
 
 func createTrustline(from *keypair.Full, to *keypair.Full, asset txnbuild.Asset) error {
@@ -249,11 +251,12 @@ func main() {
 		// source for our new asset, first, and only THEN send the money.
 		asset = txnbuild.CreditAsset{Code: *token, Issuer: keys.Address()}
 
+		var err error
 		if *requireTrust {
-			err := requireTrustline(keys, asset)
+			err = requireTrustline(keys, asset)
 		}
 
-		err := createTrustline(target, keys, asset)
+		err = createTrustline(target, keys, asset)
 		if err != nil {
 			return
 		}

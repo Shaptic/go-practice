@@ -41,7 +41,10 @@ func fundAccount(pair *keypair.Full) error {
 	}
 
 	fmt.Println("[*]")
-	fmt.Println(string(body))
+
+	respJson := make(map[string]interface{})
+	json.Unmarshal(body, &respJson)
+	fmt.Printf("  Hash: %s\n", respJson["hash"].(string))
 
 	return nil
 }
