@@ -19,6 +19,11 @@ import (
 	"os"
 )
 
+type SerializedAccount struct {
+	Public string `json:"public"`
+	Secret string `json:"secret"`
+}
+
 func fundAccount(pair *keypair.Full) error {
 	pubkey := pair.Address()
 	state("Funding %s", pubkey)
@@ -77,7 +82,7 @@ func createAccount() *keypair.Full {
 
 	defer f.Close()
 
-	data, _ := json.Marshal(KeyPair{Public: pair.Address(), Secret: pair.Seed()})
+	data, _ := json.Marshal(SerializedAccount{Public: pair.Address(), Secret: pair.Seed()})
 
 	f.Write(data)
 	f.Sync()
@@ -107,7 +112,7 @@ func loadAccount(filename string) *keypair.Full {
 		return nil
 	}
 
-	var result KeyPair
+	var result SerializedAccount
 	err = json.Unmarshal(data, &result)
 	if err != nil {
 		printErrorMsg("Decoding '%s' failed:\n  %s", filename, err)
