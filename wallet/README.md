@@ -58,3 +58,11 @@ Transferring the issued token won't recreate the trustline:
     [*] Sending 42 DOGE to GAA76GBBRN2VZEG5VHGDMIYM3QHXJD3HTCMDTEKZL4NHOS3XFXEGGINZ ...
       Ledger: 469886
       Hash: b1534f67fee47296318c47e66ace4de78be9fd3d9be9bf498bc29f8b48dae524
+
+And, obviously, balances update accordingly:
+
+    ./wallet -load accounts/account-1.json
+    [*] Loading account from accounts/account-1.json ...
+    [*] Retrieving balances for GAA76GBBRN2VZEG5VHGDMIYM3QHXJD3HTCMDTEKZL4NHOS3XFXEGGINZ ...
+      1276.0000000 (DOGE)
+      14533.9999400 (XLM)
